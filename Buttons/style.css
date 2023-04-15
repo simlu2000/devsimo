@@ -1,0 +1,100 @@
+body{
+    background-color:black;
+}
+
+button{
+    left:50%;
+    top:50%;
+}
+
+/* CSS */
+
+:root {
+    --color-light : #F4F4ED;
+    --color-dark: #F18F01;
+}
+
+button{
+    position: relative;
+    overflow: hidden;
+    transform : translateZ(0);
+    display: flex;
+    align-items: center;
+    gap:12px;
+    height:64px;
+    padding: 0 38px 0 30px;
+    border: 0;
+    border-radius : 32px;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:18px;
+    font-weight:500;
+    background: var(--color-light);
+    color: #0e1e25;
+}
+
+button > :is(span, p){
+    position:relative;
+    z-index:3;
+}
+button::before, button::after{
+    content: "";
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:300%;
+    height:100%;
+    opacity:0;
+    transition : opacity 0.25s;
+}
+button::before{
+    z-index: 1;
+    background:
+        var(--color-light)
+        repeating-linear-gradient(
+            50deg,
+            transparent,
+            transparent 10px,
+            var(--color-dark) 10px,
+            var(--color-dark) 20px
+        );
+}
+button::after{
+    z-index:2;
+    background: 
+        linear-gradient(
+            var(--color-light) 30%,
+            transparent 100%
+        );
+}
+
+/*3*/
+button::after{ z-index: 2; }
+
+button.loading:hover::before,
+button.loading:hover span{
+    animation-play-state: paused;
+}
+
+button.loading::before,
+button.loading::after{
+    opacity:1;
+}
+
+@keyframes loading{
+    0% {translate : 25px 0;}
+    100% { translate:-30px 0;}
+}
+
+@keyframes spin{
+    100% { rotate: 1turn; }
+}
+
+button.loading::before{
+    animation:
+        loading 0.6s infinite linear;
+}
+
+button.loading span{
+    animation:
+        spin 0.6s infinite linear;
+}
